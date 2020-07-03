@@ -55,6 +55,7 @@ pipeline {
 			    kubectl apply -f aws/capstone-app-deployment.yml
 			    kubectl apply -f aws/load-balancer.yml
 			    kubectl get pods
+				kubectl get svc
 		    '''
 		}
             }
