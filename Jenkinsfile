@@ -31,7 +31,7 @@ pipeline {
 
         stage('Create cluster') {
             steps {
-                withAWS(credentials: 'aws-static', region: 'eu-north-1', [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME')]) {
+                withAWS(credentials: 'aws-static', region: 'us-west-2') {
                     sh "eksctl create cluster --name capstonecluster --version 1.16 --region us-west-2 --without-nodegroup"
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
 
 		stage('Create node group') {
             steps {
-                withAWS(credentials: 'aws-static', region: 'eu-north-1', [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME')]) {
+                withAWS(credentials: 'aws-static', region: 'us-west-2') {
                     sh "eksctl create nodegroup --cluster capstonecluster --version auto --name standard-workers --node-type t3.micro --node-ami auto --nodes 3 --nodes-min 1 --nodes-max 4 --region us-west-2 --ssh-public-key udacity-oregon-course"
                 }
             }
@@ -47,7 +47,7 @@ pipeline {
 
 		stage('Deploying') {
             steps {
-                withAWS(credentials: 'aws-static', region: 'eu-north-1', [usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME')]) {
+                withAWS(credentials: 'aws-static', region: 'us-west-2') {
                     sh '''
 					aws eks --region us-west-2 update-kubeconfig --name capstonecluster
 					kubectl get nodes
