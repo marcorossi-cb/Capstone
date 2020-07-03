@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: capstone
+  labels:
+    app: capstone
+spec:
+  type: LoadBalancer
+  selector:
+    app: capstone
+  ports:
+  - port: 80
+    targetPort: 80
+  
+  
