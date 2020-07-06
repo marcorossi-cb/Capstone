@@ -29,21 +29,21 @@ pipeline {
 		}
 	}
 
-    //     stage('Create cluster') {
-    //         steps {
-    //             withAWS(credentials: 'aws-static', region: 'us-west-2') {
-    //                 sh "eksctl create cluster --name capstonecluster --version 1.16 --region us-west-2 --without-nodegroup"
-    //             }
-    //         }
-    //     }
+        stage('Create cluster') {
+            steps {
+                withAWS(credentials: 'aws-static', region: 'us-west-2') {
+                    sh "eksctl create cluster --name capstonecluster --version 1.16 --region us-west-2 --without-nodegroup"
+                }
+            }
+        }
 
-	// stage('Create node group') {
-    //         steps {
-    //             withAWS(credentials: 'aws-static', region: 'us-west-2') {
-    //                 sh "eksctl create nodegroup --cluster capstonecluster --version auto --name standard-workers --node-type t3.micro --node-ami auto --nodes 3 --nodes-min 1 --nodes-max 4 --region us-west-2 --ssh-public-key udacity-oregon-course"
-    //             }
-    //         }
-    //     }
+	stage('Create node group') {
+            steps {
+                withAWS(credentials: 'aws-static', region: 'us-west-2') {
+                    sh "eksctl create nodegroup --cluster capstonecluster --version auto --name standard-workers --node-type t3.micro --node-ami auto --nodes 3 --nodes-min 1 --nodes-max 4 --region us-west-2 --ssh-public-key udacity-oregon-course"
+                }
+            }
+        }
 
 	stage('Deploying') {
             steps {
@@ -51,12 +51,14 @@ pipeline {
                     sh '''
 			    aws eks --region us-west-2 update-kubeconfig --name capstonecluster
 			    kubectl get nodes
+				chmod +x replaceARNrole.sh
+				./replaceARNrole
 			    kubectl apply -f aws/aws-auth-cm.yaml
 			    kubectl apply -f aws/capstone-app-deployment.yml
 			    kubectl apply -f aws/load-balancer.yml
 			    kubectl get pods
 				kubectl get svc
-		    '''
+			'''
 		}
             }
         }
