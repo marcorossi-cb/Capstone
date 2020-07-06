@@ -52,7 +52,7 @@ pipeline {
 			    aws eks --region us-west-2 update-kubeconfig --name capstonecluster
 			    kubectl get nodes
 			    chmod +x aws/replaceARNrole.sh
-			    ./aws/replaceARNrole
+			    ./aws/replaceARNrole.sh
 			    kubectl apply -f aws/aws-auth-cm.yaml
 			    kubectl apply -f aws/capstone-app-deployment.yml
 			    kubectl apply -f aws/load-balancer.yml
