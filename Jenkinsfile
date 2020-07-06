@@ -53,6 +53,7 @@ pipeline {
 			    kubectl get nodes
 			    chmod +x aws/replaceARNrole.sh
 			    ./aws/replaceARNrole.sh
+				cat aws/aws-auth-cm.yaml
 			    kubectl apply -f aws/aws-auth-cm.yaml
 			    kubectl apply -f aws/capstone-app-deployment.yml
 			    kubectl apply -f aws/load-balancer.yml
