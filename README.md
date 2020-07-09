@@ -25,7 +25,7 @@ In this project you will apply the skills and knowledge which were developed thr
 ## The files included
 
 * /Screenshot : Screenshot the result of deploy.
-* /aws : Yaml files for deployment and service and a script bash for replacing ARN role
+* /aws : Yaml files for deployment and service and a script bash for replacing ARN role into specific yaml file
 * /Deploy-containers-pipeline : Deployment Script of Containers Pipeline file
 * Jenkinsfile : Jenkinsfile for creating pipeline
 * Dockerfile : Dockerfile for building the image 
